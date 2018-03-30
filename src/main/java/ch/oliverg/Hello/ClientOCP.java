@@ -20,7 +20,7 @@ import io.fabric8.openshift.client.OpenShiftClient;
 
 import java.util.List;
 
-    public class ClientOCP {
+public class ClientOCP {
         public static void main(String[] args) {
             try {
                 OpenShiftClient client = new DefaultOpenShiftClient();
@@ -75,7 +75,10 @@ import java.util.List;
                 }
                 List<Namespace> namespaces = nlist.getItems();
                 for (Namespace np : namespaces) {
-                    System.out.println("Namespace " + np.getMetadata().getName() + " has version: " + np.getMetadata().getAdditionalProperties());
+                    System.out.println("Namespace " +
+                            np.getMetadata().getName() +
+                            " has version: " +
+                            np.getMetadata().getAdditionalProperties());
                 }
                 System.out.println("Found " + items.size() + " Project(s)");
 

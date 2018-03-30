@@ -1,9 +1,9 @@
-package ch.oliverg.Hello.services;
+package ch.oliverg.OcpMon.services;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public interface OcpService {
 
-    ArrayList<String> getOCPs();
+    ArrayList<String> getOCPNamespaces();
 }

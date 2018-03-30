@@ -1,4 +1,4 @@
-package ch.oliverg.Hello;
+package ch.oliverg.OcpMon;
 
 
 import io.fabric8.kubernetes.api.model.Service;

@@ -1,7 +1,7 @@
-package ch.oliverg.Hello;
+package ch.oliverg.OcpMon;
 
 
-import ch.oliverg.Hello.services.OcpService;
+import ch.oliverg.OcpMon.services.OcpService;
 import io.fabric8.kubernetes.api.model.Namespace;
 import io.fabric8.kubernetes.api.model.NamespaceList;
 import io.fabric8.kubernetes.api.model.Service;
@@ -27,23 +27,14 @@ import java.util.Map;
 @Controller
 public class ClientOCPController {
 
-
-
-    @RequestMapping(value = "/ocp", method = RequestMethod.GET)
-    public String welcome(Map<String, Object> model) {
-        return "ocp";
-    }
-
     @Autowired
     OcpService ocpService;
 
-
-    @RequestMapping("/test")
+    @RequestMapping(value = "/ocp", method = RequestMethod.GET)
     public String home(Map<String, Object> model) {
-        model.put("message", ocpService.getOCPs());
-        System.out.println(ocpService.getOCPs());
+        model.put("message", ocpService.getOCPNamespaces());
+        System.out.println(ocpService.getOCPNamespaces());
         return "ocp";
     }
-
 
 }

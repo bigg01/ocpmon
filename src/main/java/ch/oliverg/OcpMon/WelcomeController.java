@@ -1,4 +1,4 @@
-package ch.oliverg.Hello;
+package ch.oliverg.OcpMon;
 
 
 import java.util.Map;
@@ -13,7 +13,7 @@ public class WelcomeController {
 
     // inject via application.properties
     @Value("${welcome.message:test}")
-    private String message = "Hello World";
+    private String message = "OcpMon World";
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String welcome(Map<String, Object> model) {

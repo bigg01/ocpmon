@@ -1,6 +1,8 @@
+${Ansi.GREEN}
 +-+-+-+-+-+-+
 |O|C|P|M|O|N|
 +-+-+-+-+-+-+
+${Ansi.DEFAULT}
 ${Ansi.RED} :: Spring Boot${spring-boot.formatted-version} :: ${Ansi.DEFAULT}
 
 --------------------------------------------------------------------------

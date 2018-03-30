@@ -1,4 +1,4 @@
-package ch.oliverg.Hello;
+package ch.oliverg.OcpMon;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

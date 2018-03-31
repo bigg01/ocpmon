@@ -6,4 +6,5 @@ import java.util.ArrayList;
 public interface OcpService {
 
     ArrayList<String> getOCPNamespaces();
+    ArrayList<String> getOCPServices();
 }

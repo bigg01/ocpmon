@@ -38,10 +38,9 @@
 <div class="container">
 
     <div class="starter-template">
-        <h1>Spring Boot Web Thymeleaf Example</h1>
-        <h2>
-            <span th:text="'Message: ' + ${message}"></span>
-        </h2>
+
+
+
 
         <i class="fas fa-camera-retro">oli</i>
 
@@ -54,17 +53,39 @@
     <table class="table table-bordered table-hover table-striped">
         <thead>
         <tr>
-            <th>Select</th>
+
+            <th>#</th>
+            <th>Namespaces</th>
 
         </tr>
         </thead>
         <tbody>
-        <tr th:each="currentClient: ${message}">
-            <td th:text="${currentClient}" ></td>
+        <tr th:each="np: ${namespaces}">
+
+            <td><i class="fab fa-docker"></i></td><td th:text="${np}" ></td>
+
 
         </tr>
         </tbody>
     </table>
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Services</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="svc: ${services}">
+           <td><i class="fas fa-beer"></i></td><td th:text="${svc}" ></td>
+
+        </tr>
+        </tbody>
+    </table>
+
+
 
 
 </div>

@@ -58,4 +58,44 @@ public class OcpServicePOJO implements OcpService {
         return ocpitems;
     }
 
+
+    @Override
+    public ArrayList<String> getOCPServices() {
+        ArrayList<String> SVCitems = new ArrayList<String>();
+
+
+        try {
+            OpenShiftClient client = new DefaultOpenShiftClient();
+            if (!client.supportsOpenShiftAPIGroup(OpenShiftAPIGroups.IMAGE)) {
+                System.out.println("WARNING this cluster does not support the API Group " + OpenShiftAPIGroups.IMAGE);
+                //return;
+            }
+
+            ServiceList servicelist = client.services().list();
+            if (servicelist == null) {
+                System.out.println("ERROR no list returned!");
+               // return;
+            }
+            List<io.fabric8.kubernetes.api.model.Service> servicelistList = servicelist.getItems();
+            for (io.fabric8.kubernetes.api.model.Service svc : servicelistList) {
+                System.out.println("Service " +
+                        svc.getMetadata().getName() +
+                        " has version: "
+                        + svc.getMetadata().getName());
+
+                SVCitems.add(svc.getMetadata().getName());
+            }
+            System.out.println("Found " + servicelistList.size() + " Project(s)");
+
+
+        } catch (KubernetesClientException e) {
+            System.out.println("Failed: " + e);
+            //e.printStackTrace();
+            SVCitems.add("ERROR");
+        }
+        return SVCitems;
+    }
+
+
+
 }

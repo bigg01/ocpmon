@@ -68,6 +68,7 @@ public class ClientOCP {
                 System.out.println("Found " + items.size() + " Project(s)");
 
 
+
                 NamespaceList nlist = client.namespaces().list();
                 if (plist == null) {
                     System.out.println("ERROR no list returned!");

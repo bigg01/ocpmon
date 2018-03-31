@@ -18,9 +18,12 @@ public class ClientOCPController {
 
     @RequestMapping(value = "/ocp", method = RequestMethod.GET)
     public String home(Map<String, Object> model) {
-        model.put("message", ocpService.getOCPNamespaces());
-        System.out.println(ocpService.getOCPNamespaces());
+        model.put("namespaces", ocpService.getOCPNamespaces());
+        model.put("services", ocpService.getOCPServices());
+
         return "ocp";
     }
+
+
 
 }

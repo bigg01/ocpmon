@@ -1,10 +1,16 @@
+/*
 h1{
 	color:#0000FF;
 }
 
+*/
+
 h2{
-	color:#FF0000;
+	color: #f1f1f1;
+	margin: auto;
+    padding: 10px;
 }
+
 
 
 html {

@@ -1,27 +1,46 @@
 package ch.oliverg.OcpMon;
 
 
-import io.fabric8.kubernetes.api.model.Service;
+import io.fabric8.kubernetes.api.model.*;
 import io.fabric8.kubernetes.client.KubernetesClientException;
-import io.fabric8.openshift.api.model.ImageStream;
-import io.fabric8.openshift.api.model.ImageStreamList;
-
-import io.fabric8.kubernetes.api.model.NamespaceList;
-import io.fabric8.kubernetes.api.model.Namespace;
-
-import io.fabric8.kubernetes.api.model.ServiceList;
-
-import io.fabric8.openshift.api.model.Project;
-import io.fabric8.openshift.api.model.ProjectList;
+import io.fabric8.openshift.api.model.*;
+import io.fabric8.openshift.api.model.ClusterRoleBindingList;
 
 import io.fabric8.openshift.client.DefaultOpenShiftClient;
 import io.fabric8.openshift.client.OpenShiftAPIGroups;
 import io.fabric8.openshift.client.OpenShiftClient;
 
+
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 public class ClientOCP {
-        public static void main(String[] args) {
+
+    private static final Logger logger = LoggerFactory.getLogger(ClientOCP.class);
+
+    private static void log(String action, Object obj) {
+        logger.info("{}: {}", action, obj);
+    }
+
+    private static void log(String action) {
+        logger.info(action);
+    }
+
+    /*private static OpenShiftClient connect(){
+        OpenShiftClient client = new DefaultOpenShiftClient();
+        if (!client.supportsOpenShiftAPIGroup(OpenShiftAPIGroups.IMAGE)) {
+            System.out.println("WARNING this cluster does not support the API Group " + OpenShiftAPIGroups.IMAGE);
+            return client
+        }
+
+    }*/
+
+
+    public static void main(String[] args) {
             try {
                 OpenShiftClient client = new DefaultOpenShiftClient();
                 if (!client.supportsOpenShiftAPIGroup(OpenShiftAPIGroups.IMAGE)) {
@@ -79,9 +98,66 @@ public class ClientOCP {
                     System.out.println("Namespace " +
                             np.getMetadata().getName() +
                             " has version: " +
-                            np.getMetadata().getAdditionalProperties());
+                            np.getMetadata().getLabels() +
+                            "netnamespace" + np.getSpec());
                 }
                 System.out.println("Found " + items.size() + " Project(s)");
+
+
+                /*
+                ResourceQuota quota = new ResourceQuotaBuilder().withNewMetadata().withName("pod-quota").endMetadata().withNewSpec().addToHard("pods", new Quantity("10")).endSpec().build();
+                log("Create resource quota", client.resourceQuotas().inNamespace("demo").create(quota));
+                */
+
+                ResourceQuotaList  qlist = client.resourceQuotas().list();
+                if (qlist == null) {
+                    System.out.println("ERROR no list returned!");
+                    return;
+                }
+                List<ResourceQuota> quotas = qlist.getItems();
+                for (ResourceQuota rquota : quotas) {
+                    System.out.println("Quota " +
+                            rquota.getMetadata().getName() +
+                            " has version: " +
+                            rquota.getMetadata().getAdditionalProperties());
+                }
+                System.out.println("Found " + items.size() + " Quotas(s)");
+
+
+                GroupList  glist = client.groups().list();
+                if (glist == null) {
+                    System.out.println("ERROR no list returned!");
+                    return;
+                }
+                List<Group> groups = glist.getItems();
+                for (Group group : groups) {
+                    System.out.println("Group " +
+                            group.getMetadata().getName() +
+                            " has version: " +
+                            group.getUsers());
+                    log("Group", group.getMetadata().getName());
+                }
+                System.out.println("Found " + items.size() + " Group(s)");
+
+                /* ClusterRoleBinding */
+
+
+                ClusterRoleBindingList  rlist = client.clusterRoleBindings().list();
+                if (rlist == null) {
+                    System.out.println("ERROR no list returned!");
+                    return;
+                }
+
+
+                List<ClusterRoleBinding> roles = rlist.getItems();
+                for (ClusterRoleBinding role : roles) {
+                    System.out.println("ClusterRoleBinding " +
+                            role.getMetadata().getName() +
+                            " has version: " +
+                            role.getUserNames());
+                    log("ClusterRoleBinding", role.getMetadata().getName());
+                }
+                System.out.println("Found " + items.size() + " ClusterRoleBinding(s)");
 
 
 

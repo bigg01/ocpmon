@@ -23,18 +23,25 @@ import io.fabric8.openshift.api.model.*;
 import io.fabric8.openshift.client.DefaultOpenShiftClient;
 import io.fabric8.openshift.client.OpenShiftClient;
 
+
+//https://github.com/fabric8io/kubernetes-client/blob/master/kubernetes-examples/src/main/java/io/fabric8/kubernetes/examples/FullExample.java
+
 public class OcpWatchRouter {
   public static void main(String[] args) {
     try {
       OpenShiftClient client = new DefaultOpenShiftClient();
-      String namespace = client.getNamespace();
-      System.out.println("Watching Route in namespace " + namespace);
-      //try (Watch watchable = client.routes().inAnyNamespace().withLabel("network-zone=v12").watch(new Watcher<Route>() {
-      try (Watch watchable = client.routes().inAnyNamespace().watch(new Watcher<Route>() {
+      //String namespace = client.getNamespace();
+      //System.out.println("Watching Route in namespace " + namespace);
+      //try (Watch watchable = client.routes().inAnyNamespace().withLabel("network-zone", "v12").watch(new Watcher<Route>() {
+
+      try (Watch watchable = client.routes().inAnyNamespace().withLabel("network-zone", "v12").watch(new Watcher<Route>() {
         @Override
         public void eventReceived(Action action, Route resource) {
-          System.out.println(">> Action: " + action + " on Route " + resource.getMetadata().getName()
-                  + " Host: " + resource.getSpec().getHost());
+          System.out.println(">> Action: " + action + " on Route " + resource.getMetadata().getName() +
+                  "\033[33m" + " Host: " + resource.getSpec().getHost() + "\033[0m");
+            //System.out.println("\033[31mRed\033[32m, Green\033[33m, Yellow\033[34m, Blue\033[0m");
+            System.out.println(resource.getSpec());
+            System.out.println(resource.getMetadata());
         }
 
         @Override
